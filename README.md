@@ -1,0 +1,1 @@
+# JHipster Ansible Release
