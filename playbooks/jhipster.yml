@@ -2,7 +2,7 @@
 - hosts: localhost
   roles:
     - { role: clone-fork, github_repository: 'jhipster', github_upstream: 'jhipster' }
-    - { role: jhipster, github_repository: 'jhipster' }
+    - { role: jhipster-prepare, github_repository: 'jhipster' }
   vars_prompt:
     - name: github_username
       prompt: 'What is your GitHub username ?'
@@ -13,7 +13,7 @@
       default: '~/projects/jhipster/'
       private: no
     - name: release_version
-      prompt: 'Choose your Release version'
+      prompt: 'Choose your release version'
       private: no
     - name: next_version
       prompt: 'Choose your next version'
