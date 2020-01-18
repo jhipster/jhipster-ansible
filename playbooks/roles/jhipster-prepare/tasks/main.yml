@@ -1,5 +1,12 @@
 ---
 
+# Update with Upstream
+- name: Fetch upstream and rebase
+  shell: git checkout master && git fetch upstream && git rebase upstream/master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+
 # Release
 
 - name: Change version to {{release_version}}

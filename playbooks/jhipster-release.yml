@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  roles:
+    - { role: jhipster-release, github_repository: 'jhipster' }
+  vars_prompt:
+    - name: github_folder
+      prompt: 'In which folder is the project ?'
+      default: '~/projects/jhipster/'
+      private: no
+    - name: release_version
+      prompt: 'Choose your release version'
+      private: no

@@ -8,20 +8,25 @@
 # Deployment to Maven Central
 
 - name: Save current settings.xml if exists
-  shell: mv settings.xml settings.xml.current.save
+  shell: mv settings.xml save.settings.xml
   args:
     chdir: '~/.m2/'
   ignore_errors: yes
 
 - name: Put the correct settings.xml
-  shell: cp settings.xml.jhipster settings.xml
+  shell: cp jhipster.settings.xml settings.xml
   args:
     chdir: '~/.m2/'
 
-# - name: Deploy to Maven Central
-#   shell: ./mvnw deploy
-#   args:
-#     chdir: '{{github_folder}}/{{github_repository}}'
+- name: Build locally with GPG key
+  shell: ./mvnw clean install
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Deploy to Maven Central
+  shell: ./mvnw deploy
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
 
 - name: Remove current settings.xml
   shell: rm settings.xml
@@ -30,19 +35,19 @@
   ignore_errors: yes
 
 - name: Put back the previous settings.xml
-  shell: mv settings.xml.current.save settings.xml
+  shell: mv save.settings.xml settings.xml
   args:
     chdir: '~/.m2/'
   ignore_errors: yes
 
-# - name: Push
-#   shell: git push upstream {{release_version}}
-#   args:
-#     chdir: '{{github_folder}}/{{github_repository}}'
+- name: Push
+  shell: git push upstream {{release_version}}
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
 
 # Change version for development
 
-# - name: Push
-#   shell: git checkout master && git push upstream master
-#   args:
-#     chdir: '{{github_folder}}/{{github_repository}}'
+- name: Push
+  shell: git checkout master && git push upstream master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'

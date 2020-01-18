@@ -14,6 +14,14 @@ sudo apt-get install -y ansible
 
 ### jhipster
 
+To prepare locally the release:
+
 ```
-ansible-playbook -v playbooks/jhipster.yml
+ansible-playbook -v playbooks/jhipster-prepare.yml
+```
+
+To publish the release:
+
+```
+ansible-playbook -v playbooks/jhipster-release.yml
 ```
