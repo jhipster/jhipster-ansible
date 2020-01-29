@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  roles:
+    - { role: clone-fork }
+  vars_prompt:
+    - name: github_username
+      prompt: 'What is your GitHub username ?'
+      default: 'jhipster'
+      private: no
+    - name: github_upstream
+      prompt: 'What is the GitHub upstream ?'
+      private: no
+    - name: github_repository
+      prompt: 'What is the repository you want to clone ?'
+      private: no
+    - name: github_folder
+      prompt: 'Where do you want to clone the project ?'
+      default: '~/projects/github/'
+      private: no

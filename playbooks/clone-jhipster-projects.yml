@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  roles:
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'generator-jhipster' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster.github.io' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'documentation-archive' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-core' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'ng-jhipster' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'react-jhipster' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-registry' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-online' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-vuejs' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-kotlin' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'generator-jhipster-blueprint' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'generator-jhipster-module' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-devbox' }
+    - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jdl-samples' }
+  vars_prompt:
+    - name: github_username
+      prompt: 'What is your GitHub username ?'
+      default: 'jhipster'
+      private: no
+    - name: github_folder
+      prompt: 'Where do you want to clone the project ?'
+      default: '~/projects/github/'
+      private: no
