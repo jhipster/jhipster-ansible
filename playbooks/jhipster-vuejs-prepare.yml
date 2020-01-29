@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  roles:
+    - { role: jhipster-vuejs-prepare, github_repository: 'jhipster-vuejs' }
+  vars_prompt:
+    - name: github_folder
+      prompt: 'In which folder is the project ?'
+      default: '~/projects/jhipster/'
+      private: no
+    - name: release_type
+      prompt: 'What type of release do you want ? (patch / minor / major)'
+      private: no

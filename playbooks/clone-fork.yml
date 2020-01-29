@@ -11,7 +11,7 @@
       prompt: 'What is the GitHub upstream ?'
       private: no
     - name: github_repository
-      prompt: 'What is the repository you want to clone ?'
+      prompt: 'Which repository you want to clone ?'
       private: no
     - name: github_folder
       prompt: 'Where do you want to clone the project ?'

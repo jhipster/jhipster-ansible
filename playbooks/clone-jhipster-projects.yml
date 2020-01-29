@@ -22,6 +22,6 @@
       default: 'jhipster'
       private: no
     - name: github_folder
-      prompt: 'Where do you want to clone the project ?'
-      default: '~/projects/github/'
+      prompt: 'Where do you want to clone all the JHipster projects ?'
+      default: '~/projects/github/jhipster/'
       private: no

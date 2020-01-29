@@ -1,0 +1,25 @@
+---
+
+# Update with upstream
+- name: Fetch upstream and rebase
+  shell: git checkout master && git fetch upstream && git rebase upstream/master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+
+# Release
+- name: Install node_modules
+  shell: npm ci
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+# Release
+- name: Release {{release_type}}
+  shell: npm version {{release_type}} -a -m 'Release v%s'
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Run test
+  shell: npm test
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
