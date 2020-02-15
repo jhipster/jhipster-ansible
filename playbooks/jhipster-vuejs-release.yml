@@ -7,10 +7,6 @@
       prompt: 'In which folder is the project ?'
       default: '~/projects/jhipster/'
       private: no
-    - name: release_version
-      prompt: 'What is the version of the release ?'
-      default: 'vX.X.X'
-      private: no
     - name: npm_otp
       prompt: 'Enter one-time password from your authenticator app'
       private: no

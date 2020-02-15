@@ -1,10 +1,5 @@
 ---
 
-- name: 'GitHub: checkout tag'
-  shell: git checkout {{release_version}}
-  args:
-    chdir: '{{github_folder}}/{{github_repository}}'
-
 # Publish
 - name: 'NPM: publish to NPM'
   shell: npm publish --otp {{npm_otp}}

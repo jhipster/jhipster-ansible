@@ -1,20 +1,15 @@
 ---
 - hosts: localhost
   roles:
-    - { role: clone-fork, github_repository: 'jhipster', github_upstream: 'jhipster' }
     - { role: jhipster-prepare, github_repository: 'jhipster' }
   vars_prompt:
-    - name: github_username
-      prompt: 'What is your GitHub username ?'
-      default: 'jhipster'
-      private: no
     - name: github_folder
-      prompt: 'Where do you want to clone the project ?'
+      prompt: 'In which folder is the project ?'
       default: '~/projects/jhipster/'
       private: no
     - name: release_version
-      prompt: 'Choose your release version'
+      prompt: 'Choose your release version (ex: X.Y.Z, without v)'
       private: no
     - name: next_version
-      prompt: 'Choose your next version'
+      prompt: 'Choose your next version (ex: X.Y.Z-SNAPSHOT)'
       private: no

@@ -8,5 +8,5 @@
       default: '~/projects/jhipster/'
       private: no
     - name: release_version
-      prompt: 'Choose your release version'
+      prompt: 'Choose your release version (ex: X.Y.Z, without v)'
       private: no

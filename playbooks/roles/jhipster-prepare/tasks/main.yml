@@ -1,14 +1,22 @@
 ---
-
-# Update with Upstream
-- name: Fetch upstream and rebase
-  shell: git checkout master && git fetch upstream && git rebase upstream/master
+# update GitHub project
+- name: 'Local: git checkout master'
+  shell: git checkout master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git fetch upstream'
+  shell: git fetch upstream
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git rebase upstream/master'
+  shell: git rebase upstream/master
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: no
 
-# Release
-
+# Prepare the release
 - name: Change version to {{release_version}}
   shell: ./jhipster-version.sh {{release_version}}
   args:
@@ -30,12 +38,10 @@
     chdir: '{{github_folder}}/{{github_repository}}'
 
 # Change version for development
-
 - name: Change version to {{next_version}}
   shell: ./jhipster-version.sh {{next_version}}
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
-
 - name: Commit Release {{next_version}}
   shell: git add . && git commit -m 'Change version for development {{next_version}}'
   args:
