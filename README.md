@@ -12,7 +12,7 @@ sudo apt-get update && \
 sudo apt-get install -y ansible
 ```
 
-### Projects
+### Projects
 
 Before cloning a project, be sure you already forked it, under GitHub.
 Then, all projects are cloned with:
