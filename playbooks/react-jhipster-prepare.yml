@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  roles:
+    - { role: react-jhipster-prepare, github_repository: 'react-jhipster' }
+  vars_prompt:
+    - name: github_folder
+      prompt: 'In which folder is the project **react-jhipster** ?'
+      default: '~/projects/jhipster/'
+      private: no
+    - name: release_type
+      prompt: 'What type of release do you want ? (patch / minor / major)'
+      private: no

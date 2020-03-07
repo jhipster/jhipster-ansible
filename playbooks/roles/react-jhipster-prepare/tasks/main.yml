@@ -1,0 +1,41 @@
+---
+# update GitHub project
+- name: 'Local: git checkout master'
+  shell: git checkout master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git fetch upstream'
+  shell: git fetch upstream
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git rebase upstream/master'
+  shell: git rebase upstream/master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+
+# Install node_modules
+- name: Install node_modules
+  shell: npm ci
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+# Prepare the release
+- name: npm run build
+  shell: npm run build
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+- name: npm run commit-lib
+  shell: npm run commit-lib
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+- name: Release {{release_type}}
+  shell: npm version {{release_type}} -a -m 'Release v%s'
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+- name: Run test
+  shell: npm test
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
