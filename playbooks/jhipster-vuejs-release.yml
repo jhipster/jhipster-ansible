@@ -4,7 +4,7 @@
     - { role: jhipster-vuejs-release, github_repository: 'jhipster-vuejs' }
   vars_prompt:
     - name: github_folder
-      prompt: 'In which folder is the project ?'
+      prompt: 'In which folder is the project **jhipster-vuejs** ?'
       default: '~/projects/jhipster/'
       private: no
     - name: npm_otp
