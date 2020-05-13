@@ -1,0 +1,18 @@
+---
+# Launch the release
+- name: 'NPM: publish'
+  shell: npm publish dist/ --otp {{npm_otp}}
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+# Push tag
+- name: 'GitHub: push tags'
+  shell: git push upstream --tags
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+# Push to master
+- name: 'GitHub: push to master'
+  shell: git checkout master && git push upstream master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
