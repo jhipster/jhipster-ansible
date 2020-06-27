@@ -1,0 +1,88 @@
+---
+
+- name: 'delete old folder: tmp/documentation-archive'
+  shell: rm -rf tmp/documentation-archive/
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'recreate folder: tmp/documentation-archive'
+  shell: mkdir -p tmp/documentation-archive/v{{release_version}}
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'start docker-compose'
+  shell: docker-compose -f documentation-archive.yml up -d
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'wait 20sec'
+  shell: sleep 20
+
+- name: 'change version to {{release_version}}'
+  shell: git checkout v{{release_version}}
+  args:
+    chdir: '{{github_folder}}/jhipster.github.io/'
+
+- name: 'create _config-baseurl.yml'
+  shell: |
+    cat >  _config-baseurl.yml << EOF
+    baseurl: /documentation-archive/{{release_version}}
+    url: /documentation-archive/{{release_version}}
+    EOF
+  args:
+    chdir: '{{github_folder}}/jhipster.github.io/'
+
+- name: 'create Gemfile'
+  shell: |
+    echo "source 'https://rubygems.org'" > Gemfile
+    echo "gem 'github-pages'">>Gemfile
+  args:
+    chdir: '{{github_folder}}/jhipster.github.io/'
+
+- name: 'Jekyll command 1'
+  shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle install
+
+- name: 'Jekyll command 2'
+  shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle exec jekyll build -d /tmp/documentation-archive/v{{release_version}} --config _config.yml,_config-baseurl.yml
+
+- name: 'switch back to master branch'
+  shell: git checkout master && git checkout -- . && git clean -fd
+  args:
+    chdir: '{{github_folder}}/jhipster.github.io/'
+
+- name: 'create alert-snippet.html'
+  shell: |
+    echo "<script>" > alert-snippet.html
+    echo "\$(document.body).prepend('<div class=\"alert alert-danger alert-dismissible fade in\" style=\"z-index: 9999;padding-top: 80px;height: 80;margin:0px;top:0;\" role=\"alert\"><h4><i class=\"fa fa-exclamation-triangle\"><\/i> JHipster old documentation<\/h4><p>This documentation is for an older version of JHipster. Click <a href=\"https://jhipster.github.io/\">here</a> for the current version of the documentation.<\/p><\/div>');</script>" >> alert-snippet.html
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'replace alert-snippet.html'
+  shell: |
+    find tmp/documentation-archive/v{{release_version}} -name "*.html" -exec sh -c "cat alert-snippet.html >> {}" \;
+    find tmp/documentation-archive/v{{release_version}} -name "*.html" -exec sh -c "sed -i '/<\/head>/i     <meta name=\"robots\" content=\"noindex\">' {}" \;
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'stop docker-compose for release'
+  shell: docker-compose -f documentation-archive.yml down
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'copy the documentation archive'
+  shell: cp -R tmp/documentation-archive/v{{release_version}} {{github_folder}}/documentation-archive/
+  args:
+    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+
+- name: 'add version in index.html'
+  lineinfile:
+    path: '{{github_folder}}documentation-archive/index.html'
+    regexp: '</li></ul>'
+    insertbefore: '</li></ul>'
+    line: '</li><li><a href="v{{release_version}}/">v{{release_version}}/</a>'
+
+- name: Commit Release {{release_version}}
+  shell: git add . && git commit -m 'Release {{release_version}}'
+  args:
+    chdir: '{{github_folder}}/documentation-archive/'
+

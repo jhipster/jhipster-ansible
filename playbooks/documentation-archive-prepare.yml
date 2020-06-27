@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  roles:
+    - { role: documentation-archive-prepare }
+  vars_prompt:
+    - name: github_folder
+      prompt: 'In which folder is the project ?'
+      default: '~/projects/jhipster/'
+      private: no
+    - name: release_version
+      prompt: 'Choose your release version (ex: X.Y.Z, without v)'
+      private: no
