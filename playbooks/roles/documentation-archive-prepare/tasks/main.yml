@@ -26,8 +26,8 @@
 - name: 'create _config-baseurl.yml'
   shell: |
     cat >  _config-baseurl.yml << EOF
-    baseurl: /documentation-archive/{{release_version}}
-    url: /documentation-archive/{{release_version}}
+    baseurl: /documentation-archive/v{{release_version}}
+    url: /documentation-archive/v{{release_version}}
     EOF
   args:
     chdir: '{{github_folder}}/jhipster.github.io/'
@@ -39,10 +39,10 @@
   args:
     chdir: '{{github_folder}}/jhipster.github.io/'
 
-- name: 'Jekyll command 1'
+- name: 'Jekyll bundle install'
   shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle install
 
-- name: 'Jekyll command 2'
+- name: 'Jekyll build for archive'
   shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle exec jekyll build -d /tmp/documentation-archive/v{{release_version}} --config _config.yml,_config-baseurl.yml
 
 - name: 'switch back to master branch'
