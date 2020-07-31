@@ -1,0 +1,48 @@
+---
+# update GitHub project
+- name: 'Local: git checkout master'
+  shell: git checkout master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git fetch upstream'
+  shell: git fetch upstream
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+- name: 'Local: git rebase upstream/master'
+  shell: git rebase upstream/master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+  ignore_errors: no
+
+# Prepare the release
+- name: Change version to {{release_version}}
+  shell: ./jhipster-version.sh {{release_version}}
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Packaging
+  shell: ./mvnw clean verify -Pprod
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Commit Release {{release_version}}
+  shell: git add . && git commit -m 'Release v{{release_version}}'
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Create jhipster tag {{release_version}}
+  shell: git tag -a v{{release_version}} -m 'Release v{{release_version}}'
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+# Change version for development
+- name: Change version to {{next_version}}
+  shell: ./jhipster-version.sh {{next_version}}
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+- name: Commit Release {{next_version}}
+  shell: git add . && git commit -m 'Change version for development v{{next_version}}'
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'

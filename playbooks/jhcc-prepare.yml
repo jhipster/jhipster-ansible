@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  roles:
+    - { role: jhcc-prepare, github_repository: 'jhipster-control-center' }
+  vars_prompt:
+    - name: github_folder
+      prompt: 'In which folder is the project ?'
+      default: '~/projects/jhipster/'
+      private: no
+    - name: release_version
+      prompt: 'Choose your release version (ex: X.Y.Z, without v)'
+      private: no
+    - name: next_version
+      prompt: 'Choose your next version (ex: X.Y.Z-SNAPSHOT)'
+      private: no

@@ -1,0 +1,11 @@
+---
+
+- name: Push
+  shell: git push upstream v{{release_version}}
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
+
+- name: Push
+  shell: git checkout master && git push upstream master
+  args:
+    chdir: '{{github_folder}}/{{github_repository}}'
