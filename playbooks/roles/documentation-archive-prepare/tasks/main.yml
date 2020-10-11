@@ -45,8 +45,8 @@
 - name: 'Jekyll build for archive'
   shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle exec jekyll build -d /tmp/documentation-archive/v{{release_version}} --config _config.yml,_config-baseurl.yml
 
-- name: 'switch back to master branch'
-  shell: git checkout master && git checkout -- . && git clean -fd
+- name: 'switch back to main branch'
+  shell: git checkout main && git checkout -- . && git clean -fd
   args:
     chdir: '{{github_folder}}/jhipster.github.io/'
 

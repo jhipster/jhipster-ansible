@@ -12,7 +12,7 @@
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
 
-- name: 'GitHub: push to master'
-  shell: git checkout master && git push upstream master
+- name: 'GitHub: push to main'
+  shell: git checkout main && git push upstream main
   args:
     chdir: '{{github_folder}}/{{github_repository}}'

@@ -48,6 +48,6 @@
 # Change version for development
 
 - name: Push
-  shell: git checkout master && git push upstream master
+  shell: git checkout main && git push upstream main
   args:
     chdir: '{{github_folder}}/{{github_repository}}'

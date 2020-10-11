@@ -1,7 +1,7 @@
 ---
 # update GitHub project
-- name: 'Local: git checkout master'
-  shell: git checkout master
+- name: 'Local: git checkout main'
+  shell: git checkout main
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: no
@@ -10,8 +10,8 @@
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: no
-- name: 'Local: git rebase upstream/master'
-  shell: git rebase upstream/master
+- name: 'Local: git rebase upstream/main'
+  shell: git rebase upstream/main
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: no
