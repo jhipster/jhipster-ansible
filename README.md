@@ -51,6 +51,36 @@ To publish the release:
 ansible-playbook -v playbooks/jhipster-release.yml
 ```
 
+
+### ng-jhipster
+
+To prepare locally the release:
+
+```
+ansible-playbook -v playbooks/ng-jhipster-prepare.yml
+```
+
+To publish the release:
+
+```
+ansible-playbook -v playbooks/ng-jhipster-release.yml
+```
+
+### react-jhipster
+
+To prepare locally the release:
+
+```
+ansible-playbook -v playbooks/react-jhipster-prepare.yml
+```
+
+To publish the release:
+
+```
+ansible-playbook -v playbooks/react-jhipster-release.yml
+```
+
+
 ### generator-jhipster
 
 To prepare locally the release:
@@ -65,6 +95,7 @@ To publish the release:
 ansible-playbook -v playbooks/generator-jhipster-release.yml
 ```
 
+
 ### jhipster-vuejs
 
 To prepare locally the release:
@@ -77,4 +108,19 @@ To publish the release:
 
 ```
 ansible-playbook -v playbooks/jhipster-vuejs-release.yml
+```
+
+
+### jhipster-control-center
+
+To prepare locally the release:
+
+```
+ansible-playbook -v playbooks/jhcc-prepare.yml
+```
+
+To publish the release:
+
+```
+ansible-playbook -v playbooks/jhcc-release.yml
 ```
