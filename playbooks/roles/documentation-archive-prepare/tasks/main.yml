@@ -82,7 +82,7 @@
     line: '</li><li><a href="v{{release_version}}/">v{{release_version}}/</a>'
 
 - name: Commit Release {{release_version}}
-  shell: git add . && git commit -m 'Release {{release_version}}'
+  shell: git add . && git commit -m 'Release v{{release_version}}'
   args:
     chdir: '{{github_folder}}/documentation-archive/'
 
