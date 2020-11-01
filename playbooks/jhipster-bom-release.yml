@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   roles:
-    - { role: jhipster-prepare, github_repository: 'jhipster' }
+    - { role: jhipster-bom-release, github_repository: 'jhipster-bom' }
   vars_prompt:
     - name: github_folder
       prompt: 'In which folder is the project ?'
@@ -9,7 +9,4 @@
       private: no
     - name: release_version
       prompt: 'Choose your release version (ex: X.Y.Z, without v)'
-      private: no
-    - name: next_version
-      prompt: 'Choose your next version (ex: X.Y.Z-SNAPSHOT)'
       private: no

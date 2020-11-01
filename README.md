@@ -37,18 +37,18 @@ ansible-playbook -v playbooks/clone-jhipster-projects.yml
 
 ## Roles for Releases
 
-### jhipster lib
+### jhipster-bom
 
 To prepare locally the release:
 
 ```
-ansible-playbook -v playbooks/jhipster-prepare.yml
+ansible-playbook -v playbooks/jhipster-bom-prepare.yml
 ```
 
 To publish the release:
 
 ```
-ansible-playbook -v playbooks/jhipster-release.yml
+ansible-playbook -v playbooks/jhipster-bom-release.yml
 ```
 
 
@@ -57,7 +57,7 @@ ansible-playbook -v playbooks/jhipster-release.yml
 To prepare locally the release:
 
 ```
-ansible-playbook -v playbooks/ng-jhipster-prepare.yml
+ansible-playbook -v playbooks/ng-jhipster-bom-prepare.yml
 ```
 
 To publish the release:
