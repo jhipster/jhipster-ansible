@@ -52,20 +52,6 @@ ansible-playbook -v playbooks/jhipster-bom-release.yml
 ```
 
 
-### ng-jhipster
-
-To prepare locally the release:
-
-```
-ansible-playbook -v playbooks/ng-jhipster-bom-prepare.yml
-```
-
-To publish the release:
-
-```
-ansible-playbook -v playbooks/ng-jhipster-release.yml
-```
-
 ### react-jhipster
 
 To prepare locally the release:
@@ -95,19 +81,18 @@ To publish the release:
 ansible-playbook -v playbooks/generator-jhipster-release.yml
 ```
 
-
-### jhipster-vuejs
+### documentation-archive
 
 To prepare locally the release:
 
 ```
-ansible-playbook -v playbooks/jhipster-vuejs-prepare.yml
+ansible-playbook -v playbooks/documentation-archive-prepare.yml
 ```
 
 To publish the release:
 
 ```
-ansible-playbook -v playbooks/jhipster-vuejs-release.yml
+ansible-playbook -v playbooks/documentation-archive-release.yml
 ```
 
 
