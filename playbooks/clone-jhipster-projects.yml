@@ -17,6 +17,10 @@
     - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jhipster-devbox' }
     - { role: clone-fork, github_upstream: 'jhipster', github_repository: 'jdl-samples' }
   vars_prompt:
+    - name: github_baseurl
+      prompt: 'What is your GitHub base URL ?'
+      default: 'git@github.com:'
+      private: no
     - name: github_username
       prompt: 'What is your GitHub username ?'
       default: 'jhipster'

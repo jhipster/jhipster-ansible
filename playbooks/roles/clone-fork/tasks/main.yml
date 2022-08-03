@@ -4,16 +4,16 @@
     path: '{{github_folder}}'
     state: directory
 
-- name: Clone git@github.com:{{github_username}}/{{github_repository}}.git
+- name: Clone {{github_baseurl}}{{github_username}}/{{github_repository}}.git
   git:
-    repo: git@github.com:{{github_username}}/{{github_repository}}.git
+    repo: '{{github_baseurl}}{{github_username}}/{{github_repository}}.git'
     dest: '{{github_folder}}/{{github_repository}}'
     clone: yes
     accept_hostkey: yes
     update: yes
 
-- name: Set upstream to git@github.com:{{github_upstream}}/{{github_repository}}.git
-  shell: git remote add upstream git@github.com:{{github_upstream}}/{{github_repository}}.git
+- name: Set upstream to {{github_baseurl}}{{github_upstream}}/{{github_repository}}.git
+  shell: git remote add upstream {{github_baseurl}}{{github_upstream}}/{{github_repository}}.git
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: yes

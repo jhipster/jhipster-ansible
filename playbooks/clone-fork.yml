@@ -3,6 +3,10 @@
   roles:
     - { role: clone-fork }
   vars_prompt:
+    - name: github_baseurl
+      prompt: 'What is your GitHub base URL ?'
+      default: 'git@github.com:'
+      private: no
     - name: github_username
       prompt: 'What is your GitHub username ?'
       default: 'jhipster'
