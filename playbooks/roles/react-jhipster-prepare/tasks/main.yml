@@ -27,10 +27,6 @@
   shell: npm run build
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
-- name: npm run commit-lib
-  shell: npm run commit-lib
-  args:
-    chdir: '{{github_folder}}/{{github_repository}}'
 - name: Release {{release_type}}
   shell: npm version {{release_type}} -a -m 'Release v%s'
   args:
