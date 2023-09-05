@@ -1,5 +1,11 @@
 ---
 
+# Update with upstream
+- name: 'Fetch upstream and rebase'
+  shell: git checkout gh-pages && git fetch upstream && git rebase upstream/gh-pages
+  args:
+    chdir: '{{github_folder}}/documentation-archive'
+  ignore_errors: no
 - name: 'delete old folder: tmp/documentation-archive'
   shell: rm -rf tmp/documentation-archive/
   args:
