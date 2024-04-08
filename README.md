@@ -12,6 +12,12 @@ sudo apt-get update && \
 sudo apt-get install -y ansible
 ```
 
+Or, if you prefer Homebrew:
+
+```
+brew install ansible
+```
+
 ### Projects
 
 Before cloning a project, be sure you already forked it, under GitHub.
