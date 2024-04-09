@@ -38,13 +38,6 @@
   args:
     chdir: '{{github_folder}}/jhipster.github.io/'
 
-- name: 'create Gemfile'
-  shell: |
-    echo "source 'https://rubygems.org'" > Gemfile
-    echo "gem 'github-pages'">>Gemfile
-  args:
-    chdir: '{{github_folder}}/jhipster.github.io/'
-
 - name: 'Jekyll bundle install'
   shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle install
 
