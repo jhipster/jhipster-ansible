@@ -16,8 +16,8 @@
   args:
     chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
 
-- name: 'start docker-compose'
-  shell: docker-compose -f documentation-archive.yml up -d
+- name: 'start docker compose'
+  shell: docker compose -f documentation-archive.yml up -d
   args:
     chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
 
