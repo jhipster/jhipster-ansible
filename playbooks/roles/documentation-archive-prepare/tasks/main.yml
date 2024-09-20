@@ -1,89 +1,41 @@
 ---
-
 # Update with upstream
-- name: 'Fetch upstream and rebase'
+- name: "Fetch upstream and rebase"
   shell: git checkout gh-pages && git fetch upstream && git rebase upstream/gh-pages
   args:
-    chdir: '{{github_folder}}/documentation-archive'
-  ignore_errors: no
-- name: 'delete old folder: tmp/documentation-archive'
-  shell: rm -rf tmp/documentation-archive/
+    chdir: "{{ github_folder }}/documentation-archive"
+  ignore_errors: false
+
+- name: "Change version to {{ release_version }}"
+  shell: git checkout v{{ release_version }}
   args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+    chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: 'recreate folder: tmp/documentation-archive'
-  shell: mkdir -p tmp/documentation-archive/v{{release_version}}
+- name: "Build website for archive"
+  shell: npm i && SITE_BASE_URL=/documentation-archive/v{{ release_version }}/ IS_DOCS_ARCHIVE=true npm run build
   args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+    chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: 'start docker compose'
-  shell: docker compose -f documentation-archive.yml up -d
+- name: "Copy the documentation archive"
+  shell: cp -R ./build {{ github_folder }}/documentation-archive/v{{ release_version }}
   args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
+    chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: 'wait 20sec'
-  shell: sleep 20
-
-- name: 'change version to {{release_version}}'
-  shell: git checkout v{{release_version}}
-  args:
-    chdir: '{{github_folder}}/jhipster.github.io/'
-
-- name: 'create _config-baseurl.yml'
-  shell: |
-    cat >  _config-baseurl.yml << EOF
-    baseurl: /documentation-archive/v{{release_version}}
-    url: /documentation-archive/v{{release_version}}
-    EOF
-  args:
-    chdir: '{{github_folder}}/jhipster.github.io/'
-
-- name: 'Jekyll bundle install'
-  shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle install
-
-- name: 'Jekyll build for archive'
-  shell: docker exec -w /srv/jekyll -i release-jhipster.tech bundle exec jekyll build -d /tmp/documentation-archive/v{{release_version}} --config _config.yml,_config-baseurl.yml
-
-- name: 'switch back to main branch'
+- name: "Switch back to main branch"
   shell: git checkout main && git checkout -- . && git clean -fd
   args:
-    chdir: '{{github_folder}}/jhipster.github.io/'
+    chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: 'create alert-snippet.html'
-  shell: |
-    echo "<script>" > alert-snippet.html
-    echo "\$(document.body).prepend('<div class=\"alert alert-danger alert-dismissible fade in\" style=\"z-index: 9999;padding-top: 80px;height: 80;margin:0px;top:0;\" role=\"alert\"><h4><i class=\"fa fa-exclamation-triangle\"><\/i> JHipster old documentation<\/h4><p>This documentation is for an older version of JHipster. Click <a href=\"https://jhipster.github.io/\">here</a> for the current version of the documentation.<\/p><\/div>');</script>" >> alert-snippet.html
-  args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
-
-- name: 'replace alert-snippet.html'
-  shell: |
-    find tmp/documentation-archive/v{{release_version}} -name "*.html" -exec sh -c "cat alert-snippet.html >> {}" \;
-    find tmp/documentation-archive/v{{release_version}} -name "*.html" -exec sh -c "sed -i '/<\/head>/i     <meta name=\"robots\" content=\"noindex\">' {}" \;
-  args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
-
-- name: 'stop docker-compose for release'
-  shell: docker-compose -f documentation-archive.yml down
-  args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
-
-- name: 'copy the documentation archive'
-  shell: cp -R tmp/documentation-archive/v{{release_version}} {{github_folder}}/documentation-archive/
-  args:
-    chdir: '{{ playbook_dir }}/roles/documentation-archive-prepare/docker/'
-
-- name: 'add version in index.html'
+- name: "Add version in index.html"
   lineinfile:
-    path: '{{github_folder}}documentation-archive/index.html'
-    regexp: '</li></ul>'
-    insertbefore: '</li></ul>'
+    path: "{{ github_folder }}documentation-archive/index.html"
+    regexp: "</li></ul>"
+    insertbefore: "</li></ul>"
     line: |
-      </li><li><a href="v{{release_version}}/">v{{release_version}}/</a>
+      </li><li><a href="v{{ release_version }}/">v{{ release_version }}/</a>
       </li></ul>
 
-- name: Commit Release {{release_version}}
-  shell: git add . && git commit -m 'Release v{{release_version}}'
+- name: "Commit Release {{ release_version }}"
+  shell: git add . && git commit -m 'Release v{{ release_version }}'
   args:
-    chdir: '{{github_folder}}/documentation-archive/'
-
+    chdir: "{{ github_folder }}/documentation-archive/"
