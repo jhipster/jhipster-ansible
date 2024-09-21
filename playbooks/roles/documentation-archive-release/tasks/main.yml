@@ -2,4 +2,4 @@
 - name: Push
   shell: git push upstream gh-pages
   args:
-    chdir: '{{github_folder}}/documentation-archive'
+    chdir: "{{ github_folder }}/documentation-archive"
