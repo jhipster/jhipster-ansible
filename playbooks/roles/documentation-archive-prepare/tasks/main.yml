@@ -11,10 +11,25 @@
   args:
     chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: "Build website for archive"
-  shell: npm i && SITE_BASE_URL=/documentation-archive/v{{ release_version }}/ IS_DOCS_ARCHIVE=true npm run build
+- name: "Install dependencies for website"
+  shell: npm i
   args:
     chdir: "{{ github_folder }}/jhipster.github.io/"
+
+- name: "Cleanup previous website build if exists"
+  shell: npm run clear
+  args:
+    chdir: "{{ github_folder }}/jhipster.github.io/"
+
+- name: "Build website for archive"
+  shell: SITE_BASE_URL=/documentation-archive/v{{ release_version }}/ IS_DOCS_ARCHIVE=true npm run build
+  args:
+    chdir: "{{ github_folder }}/jhipster.github.io/"
+
+- name: "Cleanup previous website archive with same version if exists"
+  shell: rm -rf {{ github_folder }}/documentation-archive/v{{ release_version }}
+  args:
+    chdir: "{{ github_folder }}/documentation-archive/"
 
 - name: "Copy the documentation archive"
   shell: cp -R ./build {{ github_folder }}/documentation-archive/v{{ release_version }}
@@ -26,14 +41,12 @@
   args:
     chdir: "{{ github_folder }}/jhipster.github.io/"
 
-- name: "Add version in index.html"
+- name: "Insert/Update version in index.html"
   lineinfile:
-    path: "{{ github_folder }}documentation-archive/index.html"
-    regexp: "</li></ul>"
-    insertbefore: "</li></ul>"
-    line: |
-      </li><li><a href="v{{ release_version }}/">v{{ release_version }}/</a>
-      </li></ul>
+    path: "{{ github_folder }}/documentation-archive/index.html"
+    regexp: '</li><li><a href="v{{ release_version }}/">v{{ release_version }}/</a></li>'
+    insertbefore: "</ul>"
+    line: '      <li><a href="v{{ release_version }}/">v{{ release_version }}/</a></li>'
 
 - name: "Commit Release {{ release_version }}"
   shell: git add . && git commit -m 'Release v{{ release_version }}'
