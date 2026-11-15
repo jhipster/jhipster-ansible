@@ -87,6 +87,13 @@ To publish the release:
 ansible-playbook -v playbooks/generator-jhipster-release.yml
 ```
 
+Both ask which branch to release from (`main` by default). To release from a maintenance branch, pass it with the other variables:
+
+```
+ansible-playbook -v playbooks/generator-jhipster-prepare.yml -e "release_type=9.5.0 branch=v9.x_maintenance"
+ansible-playbook -v playbooks/generator-jhipster-release.yml -e "release_version=v9.5.0 branch=v9.x_maintenance"
+```
+
 ### documentation-archive
 
 To prepare locally the release:

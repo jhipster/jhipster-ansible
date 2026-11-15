@@ -1,8 +1,9 @@
 ---
 
 # Update with upstream
-- name: Fetch upstream and rebase
-  shell: git checkout main && git fetch upstream && git rebase upstream/main
+# A maintenance branch may not exist locally yet: create it from upstream's.
+- name: Fetch upstream and rebase {{branch}}
+  shell: git fetch upstream && (git checkout {{branch}} || git checkout -b {{branch}} --track upstream/{{branch}}) && git rebase upstream/{{branch}}
   args:
     chdir: '{{github_folder}}/{{github_repository}}'
   ignore_errors: no
