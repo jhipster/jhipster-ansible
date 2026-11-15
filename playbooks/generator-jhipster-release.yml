@@ -7,6 +7,10 @@
       prompt: 'In which folder is the project ?'
       default: '~/projects/jhipster/'
       private: no
+    - name: branch
+      prompt: 'Which branch do you release from ? (main, or a maintenance branch like v9.x_maintenance)'
+      default: 'main'
+      private: no
     - name: release_version
       prompt: 'What is the version of the release ?'
       default: 'vX.X.X'
